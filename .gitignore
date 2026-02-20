@@ -1,12 +1,4 @@
-# ===== FRONTEND (Angular) =====
-frontend/node_modules/
-frontend/dist/
-frontend/.angular/
-frontend/.vite/
-frontend/.cache/
-frontend/coverage/
-
-# ===== BACKEND (Spring Boot) =====
+# ===== BACKEND (Spring Boot) ====
 backend/target/
 backend/.mvn/
 backend/.idea/
