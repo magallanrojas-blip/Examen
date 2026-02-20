@@ -1,0 +1,118 @@
+<div class="container py-4">
+
+    <!-- FORM -->
+    <div class="card shadow-lg border-0 rounded-3 mb-4">
+        <div class="card-header bg-primary text-white fw-semibold">
+            Registrar Tipo de Habitación
+        </div>
+
+        <div class="card-body">
+            <div class="row g-3">
+
+                <div class="col-md-4">
+                    <label class="form-label">Nombre</label>
+                    <input class="form-control" [(ngModel)]="nuevo.nombre" placeholder="Ej: Doble">
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Descripción</label>
+                    <input class="form-control" [(ngModel)]="nuevo.descripcion"
+                        placeholder="Ej: 2 personas - baño privado">
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Precio por noche</label>
+                    <input type="number" class="form-control" [(ngModel)]="nuevo.precioNoche">
+                </div>
+
+            </div>
+
+            <div class="text-end mt-4">
+                <button class="btn btn-success px-4" (click)="guardar()">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TABLA -->
+    <div class="card shadow-lg border-0 rounded-3">
+        <div class="card-header fw-semibold">Listado de Tipos</div>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-striped align-middle mb-0">
+                <thead class="table-light">
+                    <tr class="text-center">
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let t of tipos" class="text-center">
+                        <td>{{t.idTipo}}</td>
+                        <td class="fw-semibold">{{t.nombre}}</td>
+                        <td>{{t.descripcion}}</td>
+                        <td class="fw-bold text-success">S/. {{t.precioNoche}}</td>
+
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary me-2" (click)="seleccionar(t)"
+                                data-bs-toggle="modal" data-bs-target="#modalEditarTipo">
+                                Editar
+                            </button>
+
+                            <button class="btn btn-sm btn-outline-danger" (click)="eliminar(t)">
+                                Eliminar
+                            </button>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<!-- MODAL EDITAR TIPO -->
+<div class="modal fade" id="modalEditarTipo" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">Editar Tipo</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row g-3">
+
+                    <div class="col-md-4">
+                        <label class="form-label">Nombre</label>
+                        <input class="form-control" [(ngModel)]="seleccionado.nombre">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Descripción</label>
+                        <input class="form-control" [(ngModel)]="seleccionado.descripcion">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Precio por noche</label>
+                        <input type="number" class="form-control" [(ngModel)]="seleccionado.precioNoche">
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button class="btn btn-success" (click)="actualizar()" data-bs-dismiss="modal">
+                    Guardar Cambios
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>

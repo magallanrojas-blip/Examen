@@ -1,0 +1,139 @@
+<div class="container py-4">
+
+    <!-- FORM -->
+    <div class="card shadow-lg border-0 rounded-3 mb-4">
+        <div class="card-header bg-primary text-white fw-semibold">
+            Registrar Habitación
+        </div>
+
+        <div class="card-body">
+            <div class="row g-3">
+
+                <div class="col-md-4">
+                    <label class="form-label">Número</label>
+                    <input class="form-control" [(ngModel)]="nueva.numero" placeholder="Ej: 101">
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Tipo</label>
+                    <select class="form-select" [(ngModel)]="nueva.tipoHabitacion" [compareWith]="compararTipo">
+                        <option [ngValue]="null">Seleccione</option>
+                        <option *ngFor="let t of tipos" [ngValue]="t">
+                            {{t.nombre}} - S/. {{t.precioNoche}}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Estado</label>
+                    <select class="form-select" [(ngModel)]="nueva.estado">
+                        <option>Disponible</option>
+                        <option>Ocupado</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="text-end mt-4">
+                <button class="btn btn-success px-4" (click)="guardar()">
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TABLA -->
+    <div class="card shadow-lg border-0 rounded-3">
+        <div class="card-header fw-semibold">Listado de Habitaciones</div>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-striped align-middle mb-0">
+                <thead class="table-light">
+                    <tr class="text-center">
+                        <th>ID</th>
+                        <th>Número</th>
+                        <th>Tipo</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let h of habitaciones" class="text-center">
+                        <td>{{h.idHabitacion}}</td>
+                        <td class="fw-semibold">{{h.numero}}</td>
+                        <td>{{h.tipoHabitacion?.nombre}}</td>
+                        <td>
+                            <span class="badge" [ngClass]="h.estado === 'Disponible' ? 'bg-success' : 'bg-danger'">
+                                {{h.estado}}
+                            </span>
+                        </td>
+
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary me-2" (click)="seleccionar(h)"
+                                data-bs-toggle="modal" data-bs-target="#modalEditarHabitacion">
+                                Editar
+                            </button>
+
+                            <button class="btn btn-sm btn-outline-danger" (click)="eliminar(h)">
+                                Eliminar
+                            </button>
+
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL EDITAR HABITACION -->
+<div class="modal fade" id="modalEditarHabitacion" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">Editar Habitación</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row g-3">
+
+                    <div class="col-md-4">
+                        <label class="form-label">Número</label>
+                        <input class="form-control" [(ngModel)]="seleccionada.numero">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Tipo</label>
+                        <select class="form-select" [(ngModel)]="seleccionada.tipoHabitacion"
+                            [compareWith]="compararTipo">
+                            <option *ngFor="let t of tipos" [ngValue]="t">
+                                {{t.nombre}} - S/. {{t.precioNoche}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Estado</label>
+                        <select class="form-select" [(ngModel)]="seleccionada.estado">
+                            <option>Disponible</option>
+                            <option>Ocupado</option>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button class="btn btn-success" (click)="actualizar()" data-bs-dismiss="modal">
+                    Guardar Cambios
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
